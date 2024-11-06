@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+<nav>
+    <a href="{{ url_for('tasks') }}">Minhas Tarefas</a>
+    <a href="{{ url_for('create') }}">Criar Tarefa</a>
+    <a href="{{ url_for('logout') }}">Logout</a>
+</nav>
+<h2>Editar Tarefas</h2>
+<form method="POST" action="{{url_for('editar', id=tarefa['id'])}}">
+    <label for="descricao">Titulo:</label>
+    <input type="text" name="descricao" value="{{ tarefa['descricao']}}">
+    <label for="data_limite">Data Limite:</label>
+    <input type="date" name="data_limite" value="{{ tarefa['data_limite'] }}">
+    <label for="prioridade">Prioridade:</label>
+    <select name="prioridade">
+        <option value="Baixa">Baixa</option>
+        <option value="Média">Média</option>
+        <option value="Alta">Alta</option>
+    </select>
+    <label for="categoria">Categoria:</label>
+    <select name="categoria">
+        <option value="Trabalho">Trabalho</option>
+        <option value="Pessoal">Pessoal</option>
+        <option value="Estudo">Estudo</option>
+    </select>
+    <label for="status">Status:</label>
+    <select name="status">
+        <option value="Em andamento">Em andamento</option>
+        <option value="Concluída">Concluída</option>
+        <option value="Pendente">Pendente</option>
+    </select>
+    <button type="submit">Salvar Tarefa</button>
+</form>
+{% endblock %}

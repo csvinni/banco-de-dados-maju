@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<nav>
+    <a href="{{ url_for('tasks') }}">Minhas Tarefas</a>
+    <a href="{{ url_for('create') }}">Criar Tarefa</a>
+    <a href="{{ url_for('logout') }}">Logout</a>
+</nav>
+<h2>Criar Tarefas</h2>
+<form method="POST">
+    <input type="text" name="descricao" placeholder="Nome da Tarefa" required>
+    <input type="date" name="data_limite" required>
+    <select name="prioridade">
+        <option value="Baixa">Baixa</option>
+        <option value="Média">Média</option>
+        <option value="Alta">Alta</option>
+    </select>
+    <select name="categoria">
+        <option value="Trabalho">Trabalho</option>
+        <option value="Pessoal">Pessoal</option>
+        <option value="Estudo">Estudo</option>
+    </select>
+    <button type="submit">Adicionar Tarefa</button>
+</form>
+{% endblock %}

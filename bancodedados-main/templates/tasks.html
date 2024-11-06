@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block content %}
+<nav>
+    <a href="{{ url_for('tasks') }}">Minhas Tarefas</a>
+    <a href="{{ url_for('create') }}">Criar Tarefa</a>
+    <a href="{{ url_for('logout') }}">Logout</a>
+</nav>
+<h2>Minhas Tarefas</h2>
+
+<button onclick="mostrarDiv()">Ver filtros</button>
+
+<div class="filtro" id="minhaDiv">
+    <form method="GET" action="{{ url_for('tasks') }}">
+        <h2 class="tarefas">Filtro de Tarefas</h2>
+        <label for="status" style="font-weight: bold;">Status:</label>
+        <div style=" display:flex; flex-direction: column; gap:10px;">
+            <select name="status" style="background-color:rgb(233, 233, 233);">
+                <option value="">Não filtrar</option>
+                <option value="Pendente" {% if status_filter == 'Pendente' %}selected{% endif %}>Pendente</option>
+                <option value="Em andamento" {% if status_filter == 'Em andamento' %}selected{% endif %}>Em andamento</option>
+                <option value="Concluída" {% if status_filter == 'Concluída' %}selected{% endif %}>Concluída</option>
+            </select>
+            <label for="prioridade" style="font-weight: bold;">Prioridade:</label>
+            <select name="prioridade" style="background-color:rgb(233, 233, 233);">
+                <option value="">Não filtrar</option>
+                <option value="Baixa" {% if prioridade_filter == 'Baixa' %}selected{% endif %}>Baixa</option>
+                <option value="Média" {% if prioridade_filter == 'Média' %}selected{% endif %}>Média</option>
+                <option value="Alta" {% if prioridade_filter == 'Alta' %}selected{% endif %}>Alta</option>
+            </select>
+            <label for="categoria" style="font-weight: bold;">Categoria:</label>
+            <select name="categoria" style="background-color:rgb(233, 233, 233);">
+
+                <option value="">Não filtrar</option>
+                <option value="Trabalho" {% if categoria_filter == 'Trabalho' %}selected{% endif %}>Trabalho</option>
+                <option value="Pessoal" {% if categoria_filter == 'Pessoal' %}selected{% endif %}>Pessoal</option>
+                <option value="Estudo" {% if categoria_filter == 'Estudo' %}selected{% endif %}>Estudo</option>
+            </select>
+        
+        </div>
+        <button onclick="fecharDiv()">Fechar</button>
+        <button type="submit" style="margin-top: 10px;">Filtrar</button>
+    </form>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 20px;">
+    {% for tarefa in tarefas %}
+    <div class="tarefa_a">
+        <h1>{{ tarefa.descricao }}</h1>
+        <h2>{{ tarefa.status }}</h2>
+        <h2>{{ tarefa.prioridade }}</h2>
+        <div class="div-tarefa">
+            <form action="{{ url_for('delete_user', id=tarefa['id']) }}" method="post" class="form-tarefa">
+                <button type="submit" style="background-color: red;">Apagar</button>
+            </form>
+            <form action="{{ url_for('editar', id=tarefa['id']) }}" method="post" class="form-tarefa">
+                <button type="submit">Editar</button>
+            </form>
+            <form action="{{ url_for('concluida', id=tarefa['id']) }}" method="post" class="form-tarefa">
+                <button type="submit" style="background-color: green;">Concluir</button>
+            </form>
+        </div>
+    </div>
+{% endfor %}
+</div>
+
+{% endblock %}
